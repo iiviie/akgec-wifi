@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKGEC WiFi Portal</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: url("{% static 'images/akgec-bg.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: black;
+        }
+
+        .form-container {
+            margin-top: 0;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: black;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 2px 6px rgba(0, 102, 204, 0.5);
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #0066cc;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #004d99;
+            transform: translateY(-2px);
+        }
+
+        .powered-by {
+            margin-top: 40px;
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .sdc-logo {
+            width: 80px;
+            margin-left: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .sdc-logo:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.6));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{% static 'images/akgec-logo.png' %}" alt="AKGEC Logo" class="logo">
+        <h2>AKGEC WiFi Portal</h2>
+        <div class="form-container">
+            <form method="post" action="{{ post_url }}">
+                <input type="text" name="username" placeholder="Student Number" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="hidden" name="magic" value="{{ magic_value }}">
+                <button type="submit" name="submit">Login</button>
+            </form>
+        </div>
+        <div class="powered-by">
+            Powered by Software Incubator
+            <img src="{% static 'images/sdc-si-logo.png' %}" alt="SDC-SI Logo" class="sdc-logo">
+        </div>
+    </div>
+</body>
+</html>
