@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKGEC WiFi Portal - Set New Password</title>
+    <title>AKGEC WiFi Portal - Test Login</title>
     {% load static %}
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <style>
@@ -43,11 +43,7 @@
             color: black;
         }
 
-        .form-container {
-            margin-top: 0;
-        }
-
-        input[type="password"] {
+        input[type="email"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin: 15px 0;
@@ -61,7 +57,7 @@
             color: black;
         }
 
-        input[type="password"]:focus {
+        input[type="email"]:focus, input[type="password"]:focus {
             outline: none;
             border-color: #0066cc;
             box-shadow: 0 2px 6px rgba(0, 102, 204, 0.5);
@@ -87,19 +83,6 @@
             transform: translateY(-2px);
         }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: black;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .back-link:hover {
-            color: #0066cc;
-        }
-
         .messages {
             margin-bottom: 20px;
         }
@@ -122,27 +105,38 @@
             color: #721c24;
         }
 
-        .description {
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
             color: black;
-            margin-bottom: 20px;
-            font-size: 14px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
         }
 
-        .password-requirements {
-            text-align: left;
-            color: black;
-            font-size: 12px;
-            margin-bottom: 15px;
-            background-color: rgba(255, 255, 255, 0.3);
+        .back-link:hover {
+            color: #0066cc;
+        }
+
+        .note {
+            background-color: rgba(255, 248, 220, 0.8);
+            border: 1px solid #ffeaa7;
+            color: #856404;
             padding: 10px;
             border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <img src="{% static 'images/akgec-logo.png' %}" alt="AKGEC Logo" class="logo">
-        <h2>Set New Password</h2>
+        <h2>Test Login</h2>
+        
+        <div class="note">
+            <strong>Testing Only:</strong> This page is for testing password resets. Use your email and new password.
+        </div>
         
         {% if messages %}
             <div class="messages">
@@ -154,24 +148,12 @@
             </div>
         {% endif %}
 
-        <div class="description">
-            Enter your new password below.
-        </div>
-
-        <div class="password-requirements">
-            <strong>Password Requirements:</strong>
-            <ul>
-                <li>At least 6 characters long</li>
-                <li>Both passwords must match</li>
-            </ul>
-        </div>
-
         <div class="form-container">
             <form method="post">
                 {% csrf_token %}
-                <input type="password" name="new_password" placeholder="New Password" required>
-                <input type="password" name="confirm_password" placeholder="Confirm New Password" required>
-                <button type="submit">Reset Password</button>
+                <input type="email" name="email" placeholder="Enter your email address" required>
+                <input type="password" name="password" placeholder="Enter your password" required>
+                <button type="submit">Test Login</button>
             </form>
         </div>
 

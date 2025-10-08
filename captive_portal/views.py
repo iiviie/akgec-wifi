@@ -91,9 +91,9 @@ def password_reset_confirm(request, token):
             messages.error(request, 'Password must be at least 6 characters long.')
             return render(request, 'password_reset_confirm.html', {'token': token})
         
-        # Update password
+        # Update password (let model handle hashing)
         student = reset_token.student
-        student.password = hashlib.md5(new_password.encode()).hexdigest()
+        student.password = new_password
         student.save()
         
         # Mark token as used
@@ -101,6 +101,36 @@ def password_reset_confirm(request, token):
         reset_token.save()
         
         messages.success(request, 'Your password has been reset successfully. You can now login with your new password.')
-        return redirect('index')
+        return redirect('password_reset_request')
     
     return render(request, 'password_reset_confirm.html', {'token': token})
+
+
+def test_login_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        if not email or not password:
+            messages.error(request, 'Both email and password are required.')
+            return render(request, 'test_login.html')
+        
+        try:
+            student = StudentModel.objects.get(email=email)
+            password_hash = hashlib.md5(password.encode()).hexdigest()
+            
+            # Debug information
+            print(f"DEBUG - Email: {email}")
+            print(f"DEBUG - Entered password: {password}")
+            print(f"DEBUG - Generated hash: {password_hash}")
+            print(f"DEBUG - Stored hash: {student.password}")
+            print(f"DEBUG - Hashes match: {student.password == password_hash}")
+            
+            if student.password == password_hash:
+                messages.success(request, f'Login successful! Welcome {student.username}.')
+            else:
+                messages.error(request, f'Invalid password. Debug: entered="{password}" hash="{password_hash}" stored="{student.password}"')
+        except StudentModel.DoesNotExist:
+            messages.error(request, 'No account found with this email.')
+    
+    return render(request, 'test_login.html')
